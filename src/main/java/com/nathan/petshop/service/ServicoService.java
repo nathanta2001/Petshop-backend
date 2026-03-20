@@ -1,6 +1,6 @@
 package com.nathan.petshop.service;
 
-
+import java.util.List;
 import com.nathan.petshop.model.Servico;
 import com.nathan.petshop.repository.ServicoRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,18 @@ public class ServicoService {
     public Servico inserirServico(Servico servico) {
         servico.setId(null); // id nulo, pois é uma inserção e não atualização
         return servicoRepository.save(servico);
+    }
+
+    public Servico updateServico(Servico servico) {
+        if (servico.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "É obrigatório o ID para atualizar");
+        }
+        return servicoRepository.save(servico);
+    }
+
+    public void deleteServico(Long id) {
+        Servico servico = this.getServico(id);
+        servicoRepository.delete(servico);
     }
 
 }
