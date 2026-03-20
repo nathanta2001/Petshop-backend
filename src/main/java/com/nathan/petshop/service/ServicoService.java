@@ -14,13 +14,17 @@ public class ServicoService {
 
     private final ServicoRepository servicoRepository; // dependecia do banco de dados
 
+    public List<Servico> getServicoList(){
+        return servicoRepository.findAll();
+    }
+
     public Servico getServico(Long id) {
         //tenta buscar no banco de dados, caso não encontre lança um 404
         return servicoRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço não encontrado"));
     }
 
-    public Servico inserirServico(Servico servico) {
+    public Servico insertServico(Servico servico) {
         servico.setId(null); // id nulo, pois é uma inserção e não atualização
         return servicoRepository.save(servico);
     }
